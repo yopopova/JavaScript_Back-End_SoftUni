@@ -2,10 +2,10 @@ const mongoose = require('mongoose');
 
 const accessorySchema = new mongoose.Schema({
     name: String,
-    description: String,
-    imageUrl: String
+    imageUrl: String,
+    description: String
 });
 
-const Accessory = mongoose.model('Accessoty', accessorySchema);
+const Accessory = mongoose.model('Accessory', accessorySchema);
 
 module.exports = Accessory;
