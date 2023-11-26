@@ -8,11 +8,12 @@
             <textarea id="description" name="description" disabled="true" />{{cube.description}}</textarea>
             <label for="image">ImageUrl</label>
             <input type="text" id="image" name="imageUrl" value="{{cube.imageUrl}}" disabled="true" />
-            
+
             <label for="difficulty">Difficulty</label>
             <select id="difficulty" name="difficultyLevel" value="" disabled="true" />
                 {{#each options}}
-                    <option value="{{value}}" {{#if selected}}selected{{/if}}>{{title}}</option>
+                    <option value="{{value}}" {{selected}}>{{title}}</option>
+                    {{!-- <option value="{{value}}" {{#if selected}}selected{{/if}}>{{title}}</option> --}}
                 {{/each}}
             </select>
             <input type="submit" value="Delete">
