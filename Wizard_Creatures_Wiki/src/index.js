@@ -2,15 +2,19 @@ const express = require('express');
 const handlebars = require('express-handlebars');
 const path = require('path');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser');
 
 const routes = require('./router');
 const { PORT, CONNECTION_STR } = require('./constants');
 
 const app = express();
 
+// Express Config
 app.use(express.static(path.resolve(__dirname, './public')));
 app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
 
+// Handlebars Config
 app.engine('hbs', handlebars.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs');
 app.set('views', 'src/views');
