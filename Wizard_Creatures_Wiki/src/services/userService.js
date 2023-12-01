@@ -3,7 +3,30 @@ const bcrypt = require('bcrypt');
 const jwt = require("../lib/jwt");
 const { SECRET } = require('../constants');
 
-exports.register = (userData) => User.create(userData);
+async function validatePassword(password, userPassword) {
+    const isValid = await bcrypt.compare(password, userPassword);
+
+    if (!isValid) {
+        throw new Error('Invalid email or password!');
+    }
+}
+
+async function getToken(user) {
+    const payload = { _id: user._id, email: user.email };
+    const token = await jwt.sign(payload, SECRET, { expiresIn: '3d' });
+
+    return token;
+}
+
+exports.register = async (userData) => {
+    const { password } = userData;
+    const user = await User.create(userData);
+
+    await validatePassword(password, user.password);
+
+    const token = await getToken(user);
+    return token;
+}
 
 exports.login = async (email, password) => {
     // Validate USER
@@ -13,15 +36,8 @@ exports.login = async (email, password) => {
         throw new Error('Invalid email or password!');
     }
 
-    // Validate PASSWORD
-    const isValid = await bcrypt.compare(password, user.password);
+    await validatePassword(password, user.password);
 
-    if (!isValid) {
-        throw new Error('Invalid email or password!');
-    }
-
-    const payload = {_id: user._id, email: user.email};
-    const token = await jwt.sign(payload, SECRET, { expiresIn: '3d' });
-
+    const token = await getToken(user);
     return token;
 }
