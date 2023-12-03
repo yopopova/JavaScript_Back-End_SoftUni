@@ -2,8 +2,9 @@ const router = require('express').Router();
 const creatureService = require('./../services/creatureService');
 
 router.get('/all', async (req, res) => {
-    const creatures = await creatureService.getAll().lean();
-    console.log({ creatures }); // Like this we can see all creatures in the database in the terminal
+    const creatures = await creatureService.getAll().lean(); // If we don't have 'lean()', we will receive an array and won't add the data correctlly
+    // We can check for 'no posts', if we write [] instead of 'await creatureService.getAll().lean()'
+    // console.log({ creatures }); // Like this we can see all creatures in the database in the terminal
 
     res.render('post/all-posts', { creatures }); // Here the path comes from the folder
 });
@@ -22,6 +23,24 @@ router.post('/create', async (req, res) => {
 
 router.get('/profile', (req, res) => {
     res.render('post/profile');
+});
+
+router.get('/:creatureId/details', async (req, res) => {
+    const { creatureId } = req.params;
+    // console.log({ creatureId });
+
+    const creature = await creatureService.singleCreature(creatureId).lean();
+    // console.log(creature);
+
+    const { user } = req;
+    // console.log(user);
+    const { owner } = creature;
+    // console.log(owner);
+
+    const isOwner = user?._id === owner.toString();
+    // console.log(isOwner);
+
+    res.render('post/details', { creature, isOwner });
 });
 
 module.exports = router;
