@@ -43,4 +43,30 @@ router.get('/:creatureId/details', async (req, res) => {
     res.render('post/details', { creature, isOwner });
 });
 
+// Edit Creature
+router.get('/:creatureId/edit', async (req, res) => {
+    const { creatureId } = req.params;
+    const creature = await creatureService.singleCreature(creatureId).lean();
+
+    res.render('post/edit', { creature });
+});
+
+router.post('/:creatureId/edit', async (req, res) => {
+    const { creatureId } = req.params;
+    const { name, species, skinColor, eyeColor, image, description } = req.body;
+    const payload = { name, species, skinColor, eyeColor, image, description, owner: req.user };
+
+    await creatureService.update(creatureId, payload);
+
+    res.redirect(`/posts/${creatureId}/details`);
+});
+
+// Delete Creature
+router.get('/:creatureId/delete', async (req, res) => {
+    const { creatureId } = req.params;
+    await creatureService.delete(creatureId);
+
+    res.redirect('/posts/all');
+});
+
 module.exports = router;
