@@ -23,12 +23,16 @@
                                 <a href="/posts/{{creature._id}}/edit" class="edit-btn">Edit</a>
                                 <a href="/posts/{{creature._id}}/delete" class="del-btn">Delete</a>
                             {{else}}
-                                <!-- logged in users, who have not yet voted-->
-                                <a href="#" class="vote-up">Vote</a>
+                                {{#unless hasVoted}}
+                                    <!-- logged in users, who have not yet voted-->
+                                    <a href="/posts/{{creature._id}}/vote" class="vote-up">Vote</a>
+                                {{/unless}}
                             {{/if}}
 
-                            <!-- logged in user who has already voted-->
-                            <p class="thanks-for-vote">Thanks For Voting</p>
+                            {{#if hasVoted}}
+                                <!-- logged in user who has already voted-->
+                                <p class="thanks-for-vote">Thanks For Voting</p>
+                            {{/if}}
                         </div>
                     {{/if}}
                 </div>
@@ -37,7 +41,6 @@
                 <img src="{{creature.image}}" alt="{{creature.name}}">
             </div>
         </div>
-
     </section>
 
     <section id="votes">
@@ -47,10 +50,10 @@
                     <h1>Votes</h1>
                     <div class="card_vote">
                         <!-- Show the rating of votes, if there are no votes yet, the number must be 0. -->
-                        <p class="PV">Total rating of votes: 0</p>
+                        <p class="PV">Total rating of votes: {{creature.votes.length}}</p>
                     </div>
                     <!-- If there are already people who have cast their vote for the post, separate their emails with a comma and a space ", " -->
-                    <!-- <p class="disc">People who voted for the post - alex@gmai.com, petar@gmail.com, petq@gmail.com</p>-->
+                    <p class="disc">People who voted for the post - alex@gmai.com, petar@gmail.com, petq@gmail.com</p>
 
                     <!-- If not display: -->
                     <p class="disc">People who voted for the post - No one has voted yet.</p>
