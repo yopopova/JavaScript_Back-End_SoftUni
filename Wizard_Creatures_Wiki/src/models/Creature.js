@@ -4,7 +4,8 @@ const creatureSchema = new mongoose.Schema({
     name: {
         type: String,
         required: true,
-        minLength: 2
+        minLength: 2,
+        unique: true
     },
     species: {
         type: String,

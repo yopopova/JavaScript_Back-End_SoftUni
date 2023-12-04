@@ -1,5 +1,6 @@
 const router = require('express').Router();
 const creatureService = require('./../services/creatureService');
+const { isAuth } = require('./../middlewares/authMiddleware');
 
 router.get('/all', async (req, res) => {
     const creatures = await creatureService.getAll().lean(); // If we don't have 'lean()', we will receive an array and won't add the data correctlly
@@ -9,7 +10,7 @@ router.get('/all', async (req, res) => {
     res.render('post/all-posts', { creatures }); // Here the path comes from the folder
 });
 
-router.get('/create', (req, res) => {
+router.get('/create', isAuth, (req, res) => {
     res.render('post/create');
 });
 
@@ -23,7 +24,7 @@ router.post('/create', async (req, res) => {
 
 
 // Profile View
-router.get('/profile', async (req, res) => {
+router.get('/profile', isAuth, async (req, res) => {
     const { user } = req;
     const myCreatures = await creatureService.getMyCreatures(user?._id).lean();
 
