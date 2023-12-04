@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const creatureService = require('./../services/creatureService');
 const { isAuth } = require('./../middlewares/authMiddleware');
+const { extractErrorMsgs } = require('./../utils/errorHandler');
 
 router.get('/all', async (req, res) => {
     const creatures = await creatureService.getAll().lean(); // If we don't have 'lean()', we will receive an array and won't add the data correctlly
@@ -18,8 +19,13 @@ router.post('/create', async (req, res) => {
     const { name, species, skinColor, eyeColor, image, description } = req.body;
     const payload = { name, species, skinColor, eyeColor, image, description, owner: req.user };
 
-    await creatureService.create(payload);
-    res.redirect('/posts/all');
+    try {
+        await creatureService.create(payload);
+        res.redirect('/posts/all');
+    } catch (error) {
+        const errorMessages = extractErrorMsgs(error);
+        res.status(404).render('post/create', { errorMessages });
+    }
 });
 
 
