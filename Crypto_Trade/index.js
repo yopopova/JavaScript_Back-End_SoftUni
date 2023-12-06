@@ -1,5 +1,6 @@
 const express = require('express');
 const handlebars = require('express-handlebars');
+const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
 
 // const path = require('path');
@@ -18,6 +19,8 @@ app.use(express.urlencoded({ extended: false })); // Body-parser | Middleware wh
 // // Handlebars Config
 app.engine('hbs', handlebars.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs'); // If we use root folder, we don't need to set up 'app.set('views', 'src/views')'.
+
+app.use(cookieParser());
 
 // Router
 app.use(routes);
