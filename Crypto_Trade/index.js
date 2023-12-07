@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 
 // const path = require('path');
 const routes = require('./routes');
+const { authentication } = require('./middlewares/authMiddleware');
 const { PORT, CONNECTION_STR } = require('./constants');
 
 const app = express();
@@ -21,6 +22,7 @@ app.engine('hbs', handlebars.engine({ extname: 'hbs' }));
 app.set('view engine', 'hbs'); // If we use root folder, we don't need to set up 'app.set('views', 'src/views')'.
 
 app.use(cookieParser());
+app.use(authentication); // After cookieParser, because we use cookies into authMiddleware.
 
 // Router
 app.use(routes);

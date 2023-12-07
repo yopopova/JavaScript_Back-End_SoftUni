@@ -5,9 +5,13 @@ router.get('/login', (req, res) => {
     res.render('auth/login');
 });
 
-router.post('/login', (req, res) => {
+router.post('/login', async (req, res) => {
     const { email, password } = req.body;
 
+    const token = await authService.login(email, password);
+
+    res.cookie('auth', token); // Add token into cookie
+    res.redirect('/');
 });
 
 router.get('/register', (req, res) => {
@@ -19,6 +23,11 @@ router.post('/register', async (req, res) => {
     await authService.regsiter(username, email, password, repeatPassword);
 
     // TODO: Login automatically
+    res.redirect('/');
+});
+
+router.get('/logout', (req, res) => {
+    res. clearCookie('auth');
     res.redirect('/');
 });
 
