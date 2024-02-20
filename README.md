@@ -14,3 +14,7 @@ The course is intensive and aims to introduce learners to the development of ser
 - Working with non-relational databases
 - Building apps with Express and Handlebars
 - Creating an MVC architecture
+
+## Certificate
+
+![JS Back-End - September 2023 - Certificate](https://github.com/yopopova/JavaScript_Back-End_SoftUni/assets/59256039/4ad8d47a-6376-4f05-8951-05c396b462b4)
