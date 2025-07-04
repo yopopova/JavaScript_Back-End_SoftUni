@@ -4,6 +4,7 @@ const authService = require('../services/authService');
 const { isAuth } = require('../middlewares/authMiddleware');
 const { getErrorMessage } = require('../utils/errorUtils');
 
+// To visualize the login view.
 router.get('/login', (req, res) => {
     res.render('auth/login');
 });
@@ -20,6 +21,7 @@ router.post('/login', async (req, res) => {
     }
 });
 
+// To visualize the register view.
 router.get('/register', (req, res) => {
     res.render('auth/register');
 });
@@ -36,6 +38,7 @@ router.post('/register', async (req, res) => {
     }
 });
 
+// Logout functionallity
 router.get('/logout', isAuth, (req, res) => {
     res.clearCookie('auth');
     res.redirect('/');
