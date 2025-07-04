@@ -1,6 +1,4 @@
 # Ignore Images folder
 images
 
-# Ignore Node Modules folder
 node_modules
-package-lock.json
