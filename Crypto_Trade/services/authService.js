@@ -15,7 +15,7 @@ exports.regsiter = async (username, email, password, repeatPassword) => {
 
     // const existingUser = await this.findByUsername(username);
 
-    const existingUser = User.findOne({
+    const existingUser = await User.findOne({
         $or: [
             { email },
             { username }
