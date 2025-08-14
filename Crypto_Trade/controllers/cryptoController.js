@@ -9,6 +9,14 @@ router.get('/catalog', async (req, res) => {
     res.render('crypto/catalog', { crypto });
 });
 
+router.get('/:cryptoId/details', async (req, res) => {
+    const crypto = await cryptoService.getOne(req.params.cryptoId);
+
+    const isOwner = crypto.owner == req.user?._id;
+
+    res.render('crypto/details', { crypto, isOwner });
+});
+
 router.get('/create', isAuth, (req, res) => {
     res.render('crypto/create');
 });
