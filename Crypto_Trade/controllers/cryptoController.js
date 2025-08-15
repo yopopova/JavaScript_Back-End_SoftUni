@@ -44,7 +44,12 @@ router.post('/:cryptoId/edit', isAuth, async (req, res) => {
     res.redirect(`/crypto/${req.params.cryptoId}/details`);
 });
 
-
+// DELETE btn
+router.get('/:cryptoId/delete', isAuth, async (req, res) => {
+    await cryptoService.delete(req.params.cryptoId);
+    // TODO: check if owner
+    res.redirect('/crypto/catalog');
+});
 
 // CREATE view
 router.get('/create', isAuth, (req, res) => {
