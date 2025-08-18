@@ -23,13 +23,14 @@ exports.buy = async (userId, cryptoId) => {
     // TODO: check if the user has already bought the crypto
     crypto.buyers.push(userId);
     return crypto.save();
-
+    
     // Alternative to the upper code lines
     // Crypto.findByIdAndUpdate(cryptoId, { $push: { buyers: userId } });
 }
 
 exports.create = (ownerId, cryptoData) => Crypto.create({ ...cryptoData, owner: ownerId });
 
-exports.edit = (cryptoId, cryptoData) => Crypto.findByIdAndUpdate(cryptoId, cryptoData);
+exports.edit = (cryptoId, cryptoData) => Crypto.findByIdAndUpdate(cryptoId, cryptoData, { runValidators: true });
+// ^ { runValidators: true } is absolutely needed for edit form validation!!!
 
 exports.delete = (cryptoId) => Crypto.findByIdAndDelete(cryptoId);

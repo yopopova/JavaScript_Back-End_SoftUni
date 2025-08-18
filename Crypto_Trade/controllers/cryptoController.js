@@ -28,7 +28,12 @@ router.get('/:cryptoId/details', async (req, res) => {
 });
 
 router.get('/:cryptoId/buy', isAuth, async (req, res) => {
-    await cryptoService.buy(req.user._id, req.params.cryptoId);
+    try {
+        await cryptoService.buy(req.user._id, req.params.cryptoId);
+    } catch (error) {
+        return res.status(400).render('404', { error: getErrorMessage(error) });
+    }
+
     res.redirect(`/crypto/${req.params.cryptoId}/details`);
 });
 
