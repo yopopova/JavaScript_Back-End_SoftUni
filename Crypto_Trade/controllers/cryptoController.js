@@ -10,6 +10,12 @@ router.get('/catalog', async (req, res) => {
     res.render('crypto/catalog', { crypto });
 });
 
+router.get('/search', async (req, res) => {
+    const { name, paymentMethod } = req.query;
+    const crypto = await cryptoService.search(name, paymentMethod);
+    res.render('crypto/search', { crypto });
+});
+
 router.get('/:cryptoId/details', async (req, res) => {
     const crypto = await cryptoService.getOne(req.params.cryptoId);
 
