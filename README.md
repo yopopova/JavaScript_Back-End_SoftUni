@@ -15,6 +15,14 @@ The course is intensive and aims to introduce learners to the development of ser
 - Building apps with Express and Handlebars
 - Creating an MVC architecture
 
+## Note
+
+Please keep in mind that if you want to use any of these materials after downloading the repository, you should run the `npm install` command into your VS Code terminal to generate the `node_modules` folder.
+
+Also, to start the back-end, you need to run the command `npm start` in the terminal and then open your browser and enter the port on which the application should start, for example, `localhost:5050`.
+
+If you want to stop the back-end, press the `Ctrl+C` command in your terminal and close the browser window.
+
 ## Certificate
 
 ![JS Back-End - September 2023 - Certificate](https://github.com/yopopova/JavaScript_Back-End_SoftUni/assets/59256039/4ad8d47a-6376-4f05-8951-05c396b462b4)
